@@ -14,9 +14,12 @@ index = None
 embedding_model = None
 document_chunks = []
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 28bcd8ae440328b0690a4c2be9311d4d3004eae0
 def initialize_app():
     global index, embedding_model, document_chunks   
     try:
