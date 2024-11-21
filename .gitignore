@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environment folders
+venv/
+env/
+
+# VS Code workspace settings
+.vscode/
+
+# macOS files
+.DS_Store
+
+# Logs and debug files
+*.log
+
+# Python packaging files
+*.egg
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# dotenv environment variables file
+.chat
+
+# Other temporary files
+*.tmp
+
+
+# Virtual environment folder
+chat/

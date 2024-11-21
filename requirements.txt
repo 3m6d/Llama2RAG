@@ -1,0 +1,7 @@
+Flask
+transformers
+sentencepiece
+torch
+faiss-cpu
+pandas
+PyMuPDF
