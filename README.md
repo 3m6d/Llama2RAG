@@ -1,4 +1,4 @@
-# **LLaMA and Mistral Model Integration README**
+# **LLaMA and Mistral Model Integration**
 
 ## **Overview**
 This project demonstrates how to integrate and interact with two powerful AI models: the **LLaMA** model (Large Language Model by Meta) and **Mistral**, an advanced language model developed by Hugging Face. Both models can be used to generate AI-driven responses based on a given prompt, and the application is designed to serve as a basis for building AI-powered systems such as chatbots, virtual assistants, or automated content generation tools.
