@@ -38,3 +38,5 @@ pip-wheel-metadata/
 
 # Virtual environment folder
 chat/
+keyy.env
+models/openai.py

@@ -4,7 +4,7 @@ import glob  # Global file searching
 from database import db  # Importing database for storing chunks (modify if necessary)
 
 # Specify the path to the PDF files (adjust as needed)
-pdf_files = glob.glob(r"C:\SourceCodeOpenAIBot\data\A_Survey_of_Investors_Preference_on_Stock_Market_A.pdf")
+pdf_files = glob.glob(r"C:\SourceCodeOpenAIBot\data\FAQ2.pdf")
 if not pdf_files:
     raise FileNotFoundError("No PDF files found at the specified path.")
 pdf_path = pdf_files[0]
@@ -101,3 +101,11 @@ def process_pdf_and_store(pdf_path):
         print(f"No high-quality chunks found in {pdf_path}")
 
     return chunks
+
+# Process the PDF and store its chunks
+processed_chunks = process_pdf_and_store(pdf_path)
+
+if processed_chunks:
+    print(f"Successfully processed and stored {len(processed_chunks)} chunks from {pdf_path}")
+else:
+    print("No chunks were processed or stored.")

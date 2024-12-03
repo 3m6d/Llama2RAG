@@ -62,20 +62,7 @@ else:
 
 # retrieval/faiss_index.py
 
-def query_faiss_index(query, index, embedding_model, document_chunks, k=5):
-    """
-    Query the FAISS index with a given query and return the top k results.
-
-    Parameters:
-    - query (str): The user's query.
-    - index (faiss.Index): The FAISS index.
-    - embedding_model (SentenceTransformer): The embedding model.
-    - document_chunks (list): The list of document chunks.
-    - k (int): Number of top results to return.
-
-    Returns:
-    - list: List of top-k document chunks matching the query.
-    """
+def query_faiss_index(query, index, embedding_model, document_chunks, k=5, threshold=1.0):
     try:
         # Encode the user query
         query_embedding = embedding_model.encode([query])
@@ -85,18 +72,21 @@ def query_faiss_index(query, index, embedding_model, document_chunks, k=5):
         print(f"Distances: {distances}")
         print(f"Indices: {indices}")
 
-        # Retrieve the corresponding chunks using the indices from FAISS
-        results = [document_chunks[idx] for idx in indices[0]]
-
-        # Debugging output
+        # Retrieve chunks within the threshold
+        results = []
         for i, idx in enumerate(indices[0]):
-            print(f"Index: {idx}, Distance: {distances[0][i]}, Chunk: {document_chunks[idx][:100]}...")
-
+            distance = distances[0][i]
+            if distance <= threshold:
+                results.append(document_chunks[idx])
+                print(f"Index: {idx}, Distance: {distance}, Chunk: {document_chunks[idx][:100]}... (Included)")
+            else:
+                print(f"Index: {idx}, Distance: {distance} exceeds threshold {threshold}. (Skipped)")
         return results
 
     except Exception as e:
         print(f"An error occurred during querying: {e}")
         return []
+
 
     
 print(f"Number of unique document chunks: {len(set(document_chunks))}")

@@ -41,3 +41,4 @@ def retrieve_documents(query, k=5):
     except Exception as e:
         print(f"An error occurred during retrieval: {e}")
         return []
+

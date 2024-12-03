@@ -3,7 +3,7 @@ from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
 from database import db  # Assuming you have this import 
-from models.llama_model import generate_response  # Assuming you have this function in llama_model.py
+from models.mistral_model import send_message  # Assuming you have this function in llama_model.py
 from retrieval.faiss_index import query_faiss_index  # Import the existing function
 
 # Initialize Flask app
@@ -26,6 +26,7 @@ def initialize_app():
 
         # Connect to the database
         db.connect_db()
+        
 
         # Retrieve document chunks from the database
         rows = db.retrieve_chunks()
@@ -38,6 +39,9 @@ def initialize_app():
         index = None
         embedding_model = None
         document_chunks = []
+
+
+#flask route for handling user
 @app.route('/query', methods=['POST'])
 def query():
     # Check if everything was initialized properly
@@ -55,7 +59,7 @@ def query():
 
     try:
         # Use the imported FAISS query function to find relevant chunks
-        matched_chunks = query_faiss_index(user_query, index, embedding_model, document_chunks)
+        matched_chunks = query_faiss_index(user_query, index, embedding_model, document_chunks, threshold=1.0)
         if not matched_chunks:
             combined_text = ""
         else:
@@ -64,7 +68,7 @@ def query():
             print(f"Matched chunks for query '{user_query}': {matched_chunks}")
 
         # Generate a response using the LLaMA model
-        response = generate_response(user_query, combined_text)
+        response = send_message(user_query, combined_text)
 
         # Return the response in JSON format
         return jsonify({"response": response})
