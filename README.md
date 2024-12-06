@@ -1,4 +1,5 @@
-**LLaMA and Mistral Model RAG system **
+
+# **Retrieval Augmented Generation (RAG) with LLaMA and Mistral Model**
 
 ## **Overview**
 This project demonstrates how to integrate and interact with two powerful AI models: the **LLaMA** model (Large Language Model by Meta) and **Mistral 7B Instruct v0.3**, an advanced language model developed by Hugging Face. Both models can be used to generate AI-driven responses based on a given prompt, and the application is designed to serve as a basis for building AI-powered systems such as chatbots, virtual assistants, or automated content generation tools.
