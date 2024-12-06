@@ -1,10 +1,12 @@
 import sqlite3
 import numpy as np
 
+### abrstrction 
+
 # Connect to the SQLite database (create it if it doesn't exist)
 def connect_db(db_path=r"C:\sqlite3\stock_data.db"):
     return sqlite3.connect(db_path)
-
+ 
 def convert_embedding_to_blob(embedding):
     # Convert NumPy array (embedding) to binary data (BLOB)
     return embedding.tobytes()

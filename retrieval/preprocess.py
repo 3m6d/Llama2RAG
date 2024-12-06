@@ -2,6 +2,7 @@ import fitz  # PyMuPDF
 import re
 import glob  # Global file searching
 from database import db  # Importing database for storing chunks (modify if necessary)
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # Specify the path to the PDF files (adjust as needed)
 pdf_files = glob.glob(r"C:\SourceCodeOpenAIBot\data\FAQ2.pdf")
@@ -52,8 +53,43 @@ def extract_text_from_pdf(pdf_path, remove_all_punctuation=False):
         print(f"An error occurred during PDF text extraction: {e}")
         return ""
 
-def chunk_text(text, chunk_size=300):
+
+def chunk_text(text, max_chunk_size=1000, chunk_overlap=200):
     """
+    Split the text into chunks using LangChain's RecursiveCharacterTextSplitter.
+    
+    Parameters:
+    text (str): The input text to be split.
+    max_chunk_size (int): The maximum number of characters for each chunk.
+    chunk_overlap (int): The number of characters to overlap between chunks.
+    
+    Returns:
+    list: A list of text chunks.
+    """
+
+    # Define the separators in order of importance
+    separators = ["\n\n", "\n", ".", "!", "?", ",", " ", ""]
+    # RecursiveTextSplitter is used here because the splitting is handled internally by the text splitter
+    # with its parameters:  it processes the entire text and returns a list of chunks
+    # All the logic of when to start a new chunk, how to handle overlaps, 
+    # and how to use separators is handled by the text splitter internally.
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=max_chunk_size,
+        chunk_overlap=chunk_overlap,
+        separators=separators
+    )
+
+    chunks = text_splitter.split_text(text)
+
+    for i, c in enumerate(chunks):
+        print(f"Chunk {i}: {c}\n---")
+
+    return chunks
+
+
+
+"""def chunk_text(text, chunk_size=300):
+    
     Split the text into smaller chunks of a specified size.
     
     Parameters:
@@ -62,7 +98,7 @@ def chunk_text(text, chunk_size=300):
     
     Returns:
     list: A list of text chunks.
-    """
+    
     chunks = []
     current_chunk = []
     current_size = 0
@@ -81,6 +117,7 @@ def chunk_text(text, chunk_size=300):
         chunks.append(" ".join(current_chunk))
     
     return chunks
+"""
 
 def process_pdf_and_store(pdf_path):
     """
@@ -104,6 +141,7 @@ def process_pdf_and_store(pdf_path):
 
 # Process the PDF and store its chunks
 processed_chunks = process_pdf_and_store(pdf_path)
+print(processed_chunks) 
 
 if processed_chunks:
     print(f"Successfully processed and stored {len(processed_chunks)} chunks from {pdf_path}")

@@ -57,14 +57,3 @@ def generate_response(query, context):
     assistant_reply = response.split("Assistant:")[-1].strip()
 
     return assistant_reply
-"""
-
-"""if __name__ == "__main__":
-    user_query = "Hello, how are you?"
-    context = "I am good."  # Since you've removed the get_relevant_context function
-    response = generate_response(user_query, context)
-    print("Assistant:", response)
-
-
-
-
